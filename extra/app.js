@@ -5,6 +5,7 @@ const homeView = $('#homeView');
 const gameView = $('#gameView');
 const gameGrid = $('#gameGrid');
 const backBtn = $('#backBtn');
+const fsBtn = $('#fsBtn');
 const bestChip = $('#bestChip');
 const bestValue = $('#bestValue');
 const playfield = $('#playfield');
@@ -632,6 +633,34 @@ function gameOneSecondHero() {
 
 backBtn.addEventListener('click', showHome);
 renderCards();
+
+/* Fullscreen for the whole page, so the header controls stay reachable
+   while fullscreen (mirrors the main site's stage-fullscreen pattern). */
+(function () {
+  var root = document.documentElement;
+  if (!(root.requestFullscreen || root.webkitRequestFullscreen)) { fsBtn.remove(); return; }
+  fsBtn.addEventListener('click', function () {
+    try {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      } else if (root.requestFullscreen) {
+        var p = root.requestFullscreen();
+        if (p && p.catch) p.catch(function () {});
+      } else {
+        root.webkitRequestFullscreen();
+      }
+    } catch (_) {}
+  });
+  function onFs() {
+    var on = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    fsBtn.setAttribute('aria-label', on ? 'Exit full screen' : 'Full screen');
+    fsBtn.setAttribute('title', on ? 'Exit full screen' : 'Full screen');
+  }
+  document.addEventListener('fullscreenchange', onFs);
+  document.addEventListener('webkitfullscreenchange', onFs);
+})();
+
 (function () {
   var h = (location.hash || '').replace('#', '');
   if (games.some(function (g) { return g.id === h; })) launchGame(h);
