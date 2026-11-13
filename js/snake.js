@@ -13,7 +13,11 @@
   var finalBest = document.getElementById('finalBest');
   var startBtn = document.getElementById('startBtn');
   var restartBtn = document.getElementById('restartBtn');
-  var snake, dir, queue, food, score, best, timer, alive, started, speed;
+  var pauseOverlay = document.getElementById('pauseOverlay');
+  var pauseBtn = document.getElementById('pauseBtn');
+  var resumeBtn = document.getElementById('resumeBtn');
+  var pauseRestartBtn = document.getElementById('pauseRestartBtn');
+  var snake, dir, queue, food, score, best, timer, alive, started, speed, paused;
   try { best = parseInt(localStorage.getItem('tinyarcade_snake_best') || '0', 10) || 0; } catch (e) {}
   best = best || 0;
 
@@ -25,6 +29,7 @@
     speed = 150;
     alive = false;
     started = false;
+    paused = false;
     placeFood();
     updateHud();
   }
@@ -35,9 +40,27 @@
     started = true;
     overlay.classList.add('hidden');
     gameoverEl.classList.add('hidden');
+    pauseOverlay.classList.add('hidden');
     clearTimeout(timer);
     timer = setTimeout(tick, speed);
   }
+
+  function pauseGame() {
+    if (!started || !alive || paused) return;
+    paused = true;
+    clearTimeout(timer);
+    pauseOverlay.classList.remove('hidden');
+  }
+  function resumeGame() {
+    if (!paused) return;
+    paused = false;
+    pauseOverlay.classList.add('hidden');
+    timer = setTimeout(tick, speed);
+  }
+  pauseBtn.addEventListener('click', pauseGame);
+  resumeBtn.addEventListener('click', resumeGame);
+  pauseRestartBtn.addEventListener('click', reset);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) pauseGame(); });
 
   function placeFood() {
     while (true) {
@@ -58,6 +81,7 @@
   }
 
   function press(x, y) {
+    if (paused) return;
     if (!started || !alive) { reset(); }
     setDir(x, y);
   }
@@ -94,6 +118,8 @@
   function updateHud() { scoreEl.textContent = score; bestEl.textContent = best; }
 
   function gameOver() {
+    paused = false;
+    pauseOverlay.classList.add('hidden');
     if (score > best) {
       best = score;
       try { localStorage.setItem('tinyarcade_snake_best', String(best)); } catch (e) {}
@@ -132,7 +158,8 @@
 
   document.addEventListener('keydown', function (e) {
     var k = e.key;
-    if (k === 'ArrowUp' || k === 'w' || k === 'W') { press(0, -1); e.preventDefault(); }
+    if (k === 'p' || k === 'P' || k === 'Escape') { if (paused) resumeGame(); else pauseGame(); e.preventDefault(); }
+    else if (k === 'ArrowUp' || k === 'w' || k === 'W') { press(0, -1); e.preventDefault(); }
     else if (k === 'ArrowDown' || k === 's' || k === 'S') { press(0, 1); e.preventDefault(); }
     else if (k === 'ArrowLeft' || k === 'a' || k === 'A') { press(-1, 0); e.preventDefault(); }
     else if (k === 'ArrowRight' || k === 'd' || k === 'D') { press(1, 0); e.preventDefault(); }

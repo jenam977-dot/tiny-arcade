@@ -11,6 +11,10 @@
   var finalBest = document.getElementById('finalBest');
   var startBtn = document.getElementById('startBtn');
   var restartBtn = document.getElementById('restartBtn');
+  var pauseOverlay = document.getElementById('pauseOverlay');
+  var pauseBtn = document.getElementById('pauseBtn');
+  var resumeBtn = document.getElementById('resumeBtn');
+  var pauseRestartBtn = document.getElementById('pauseRestartBtn');
   var W = 0, H = 0;
   var TYPES = [
     { emoji: '🍉', color: '#ff5a5a' },
@@ -113,6 +117,8 @@
 
   function endGame() {
     running = false;
+    paused = false;
+    pauseOverlay.classList.add('hidden');
     if (score > best) { best = score; try { localStorage.setItem('tinyarcade_fruit_best', String(best)); } catch (e) {} }
     finalScore.textContent = score;
     finalBest.textContent = best;
@@ -125,16 +131,35 @@
     updateHud();
     overlay.classList.add('hidden');
     gameoverEl.classList.add('hidden');
+    pauseOverlay.classList.add('hidden');
     running = true; paused = false;
     last = performance.now();
   }
   startBtn.addEventListener('click', start);
   restartBtn.addEventListener('click', start);
 
+  function showPause() {
+    if (!running || paused) return;
+    paused = true;
+    pauseOverlay.classList.remove('hidden');
+  }
+  function hidePause() {
+    if (!paused) return;
+    paused = false;
+    pauseOverlay.classList.add('hidden');
+    last = performance.now();
+  }
+  pauseBtn.addEventListener('click', showPause);
+  resumeBtn.addEventListener('click', hidePause);
+  pauseRestartBtn.addEventListener('click', function () { pauseOverlay.classList.add('hidden'); start(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') { if (paused) hidePause(); else showPause(); }
+  });
+
   function pos(e) { var r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
 
   canvas.addEventListener('pointerdown', function (e) {
-    if (!running) return;
+    if (!running || paused) return;
     var p = pos(e);
     trail = [{ x: p.x, y: p.y, t: performance.now() }];
   });
@@ -148,15 +173,14 @@
   });
   canvas.addEventListener('pointerup', function () {});
   canvas.addEventListener('pointercancel', function () {});
-  document.addEventListener('visibilitychange', function () { if (document.hidden && running) paused = true; });
-  canvas.addEventListener('click', function () { if (paused) { paused = false; last = performance.now(); } });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) showPause(); });
 
   function step(now) {
     requestAnimationFrame(step);
     var dt = Math.min(2.5, Math.max(0.4, (now - last) / 16.667));
     last = now;
     if (!running) { draw(); return; }
-    if (paused) { draw(); drawPaused(); return; }
+    if (paused) { draw(); return; }
     var g = 0.22 * (H / 500);
     var i;
     spawnIn -= dt * 16.667;
@@ -258,12 +282,6 @@
       ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
     }
-  }
-
-  function drawPaused() {
-    ctx.fillStyle = 'rgba(5,7,15,0.6)'; ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#ffffff'; ctx.font = 'bold 24px system-ui, sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('Paused — tap to resume', W / 2, H / 2);
   }
 
   requestAnimationFrame(function (now) { last = now; requestAnimationFrame(step); });

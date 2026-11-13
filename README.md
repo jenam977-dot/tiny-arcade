@@ -1,9 +1,9 @@
 # Tiny Arcade
 
 Free mini games that run entirely in the browser. No build step, no dependencies,
-no accounts. Plain HTML + CSS + JavaScript.
+no accounts, no tracking. Plain HTML + CSS + JavaScript.
 
-## Games (v1, 2026-11-13)
+## Games (v2, 2026-11-13)
 
 | Game | File | Controls |
 |---|---|---|
@@ -12,12 +12,28 @@ no accounts. Plain HTML + CSS + JavaScript.
 | Brick Breaker | `games/breaker.html` + `js/breaker.js` | Mouse / touch / arrow keys, Space to launch |
 | Memory Match | `games/memory.html` + `js/memory.js` | Tap / click cards |
 
-Best scores are stored in the visitor's own browser (`localStorage`) only.
+Every game page has: start / pause / resume / game-over overlays, a
+level-complete overlay (Brick Breaker), fullscreen on the game stage,
+collapsible instructions, and a best score saved in the visitor's own browser
+(`localStorage`). Pause with the Pause button, `P`, or `Esc`; games also pause
+when the tab is hidden.
+
+## Site features
+
+- `index.html`: hero, search + category filters (working), recently played,
+  favourites, about section. Search and filters act on the real game cards —
+  no invented games, no fake statistics.
+- `js/arcade.js`: shared behaviour — theme toggle (dark/light, persisted),
+  mobile nav, favourites, recently played, fullscreen, share links. All state
+  stays in the visitor's browser.
+- `styles.css`: the whole design system (dark-first + light theme,
+  responsive, reduced-motion support, visible focus states).
+- Game artwork is inline SVG drawn for this site. No external images.
 
 ## Pages
 
 `index.html` (game grid), `about.html`, `privacy.html`, `terms.html`,
-`contact.html`, plus `robots.txt` and `sitemap.xml` for search engines.
+`contact.html`, plus `robots.txt`, `sitemap.xml`, and `CNAME` (custom domain).
 
 ## Run locally
 
@@ -30,32 +46,33 @@ python3 -m http.server 8000
 ## Deploy
 
 GitHub Pages, repo `jenam977-dot/tiny-arcade`, branch `main`, root folder.
-Push this directory's contents to the repo root, then enable Pages in the
-repo's Settings → Pages (deploy from branch `main` / root). Live URL:
-https://jenam977-dot.github.io/tiny-arcade/
+Push this directory's contents to the repo root. Custom domain
+`arcade.manasonroads.cv` via the `CNAME` file + a Cloudflare DNS CNAME record
+`arcade` → `jenam977-dot.github.io` (DNS only, not proxied). Live URL:
+https://arcade.manasonroads.cv/ (the github.io address redirects to it).
 
 ## Add a game
 
 1. Write `js/<game>.js` (plain JS, no dependencies; guard `localStorage` with
-   try/catch; support touch via pointer events or touch handlers).
-2. Write `games/<game>.html` following the existing shells (same header, HUD,
-   overlay, footer; unique `<title>` and meta description).
-3. Add a card to `index.html` and a URL to `sitemap.xml`.
+   try/catch; support touch via pointer events or touch handlers; include
+   pause via the `pauseBtn` / `pauseOverlay` / `resumeBtn` / `pauseRestartBtn`
+   ids).
+2. Write `games/<game>.html` following the existing shells (same nav, HUD,
+   overlays, details panel, footer; unique `<title>` and meta description;
+   `data-game="<slug>"` on `<main>` for recently-played tracking).
+3. Add a card to `index.html` (with `data-slug`, `data-category`,
+   `data-title`, `data-desc` and a fav button) and a URL to `sitemap.xml`.
 4. Syntax-check: `node --check js/<game>.js`, then play-test in a browser.
 
 ## Monetization (the money setup)
 
 Status 2026-11-13: site built and AdSense-ready in structure (real content
 pages, privacy/terms/contact, sitemap, no copied assets). AdSense itself is
-NOT applied for — that step needs Manas:
-
-1. The site must be live and reachable (done via GitHub Pages).
-2. Manas applies at adsense.google.com with his Google account, adds the site,
-   and pastes the verification/ad code into the pages (Muse can add the code
-   once Google issues it).
-3. Google reviews the site (days to weeks; new/thin sites are often rejected
-   first time — more games + more content + some traffic improves the odds).
-4. Payment setup (address, bank/tax details) is his step, in his own account.
+NOT yet applied for — the upgrade application for the existing AdSense
+account on jenam977@gmail.com (a hosted AdSense-for-YouTube account,
+pub-3175371468463396) is in progress, and the site will be submitted as
+arcade.manasonroads.cv once its DNS record exists. No ad code has been issued
+yet; when Google issues a snippet, add it to the pages and push.
 
 Traffic is what turns ads into money. The site has share links (WhatsApp,
 Telegram, Facebook) and search-engine basics; sustained traffic comes from

@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://jenam977-dot.github.io/tiny-arcade/sitemap.xml
+Sitemap: https://arcade.manasonroads.cv/sitemap.xml

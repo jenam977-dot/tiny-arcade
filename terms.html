@@ -5,14 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Terms of Use — Tiny Arcade</title>
 <meta name="description" content="Tiny Arcade terms of use: free games for personal entertainment, provided as-is.">
+<script>(function(){try{var t=localStorage.getItem('tinyarcade_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="site"><a class="logo" href="index.html">🎮 Tiny <b>Arcade</b></a><nav><a href="index.html">Games</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></header>
-<main>
-<article class="page">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+<div class="nav-inner">
+<a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5v9l8-4.5Z" fill="#fff"/></svg></span>Tiny <em>Arcade</em></a>
+<nav class="nav-links" id="navLinks" aria-label="Main">
+<a href="index.html">Home</a>
+<a href="index.html#games">All Games</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</nav>
+<div class="nav-actions">
+<button class="icon-btn" id="themeBtn" type="button" aria-label="Switch to light theme">
+<svg class="theme-icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 13.5A8 8 0 1 1 10.5 4 6.5 6.5 0 0 0 20 13.5Z"/></svg>
+<svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5 5l1.6 1.6M17.4 17.4 19 19M19 5l-1.6 1.6M6.6 17.4 5 19"/></svg>
+</button>
+<button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+</div>
+</div>
+</header>
+<main id="main" class="wrap">
+<article class="page-article">
 <h1>Terms of Use</h1>
-<p>Last updated: 13 November 2026.</p>
+<p class="updated">Last updated: 13 November 2026.</p>
 <p>By using Tiny Arcade ("the site"), you agree to these terms.</p>
 <h2>Free personal use</h2>
 <p>The games on this site are free to play for personal entertainment. You may share links to the site. You may not copy, redistribute, or sell the site's games or code, or present them as your own work.</p>
@@ -28,6 +49,37 @@
 <p>Questions about these terms can be sent through the <a href="contact.html">contact page</a>.</p>
 </article>
 </main>
-<footer class="site"><a href="about.html">About</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a><p>© 2026 Tiny Arcade. All games are original and free to play.</p></footer>
+<footer class="site">
+<div class="footer-grid">
+<div class="footer-brand">
+<a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5v9l8-4.5Z" fill="#fff"/></svg></span>Tiny <em>Arcade</em></a>
+<p>Free mini games in your browser. No downloads, no sign-up — just play.</p>
+<div class="share-row"><span style="color:var(--muted);font-size:.85rem;font-weight:600">Share:</span><a data-share="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a><a data-share="telegram" href="#" target="_blank" rel="noopener">Telegram</a><a data-share="facebook" href="#" target="_blank" rel="noopener">Facebook</a></div>
+</div>
+<div class="footer-col">
+<h4>Games</h4>
+<ul>
+<li><a href="games/fruit-slice.html">Fruit Slice</a></li>
+<li><a href="games/snake.html">Snake</a></li>
+<li><a href="games/breaker.html">Brick Breaker</a></li>
+<li><a href="games/memory.html">Memory Match</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Site</h4>
+<ul>
+<li><a href="about.html">About</a></li>
+<li><a href="privacy.html">Privacy Policy</a></li>
+<li><a href="terms.html">Terms</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Tiny Arcade. All games are original and free to play.</span>
+<span>Made for players, in the browser.</span>
+</div>
+</footer>
+<script src="js/arcade.js"></script>
 </body>
 </html>

@@ -5,22 +5,133 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brick Breaker — Tiny Arcade</title>
 <meta name="description" content="Brick Breaker: bounce the ball, smash every brick, and clear the level. Three lives, faster balls each level. Free in your browser.">
+<script>(function(){try{var t=localStorage.getItem('tinyarcade_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-<header class="site"><a class="logo" href="../index.html">🎮 Tiny <b>Arcade</b></a><nav><a href="../index.html">Games</a><a href="../about.html">About</a><a href="../contact.html">Contact</a></nav></header>
-<main class="game-page">
-<h1>🧱 Brick Breaker</h1>
-<p class="tag">Move the paddle, keep the ball alive, and smash every brick. Clear the board to reach the next level.</p>
-<div class="hud"><span>Score <b id="score">0</b></span><span>Lives <b id="lives">3</b></span><span>Best <b id="best">0</b></span></div>
-<div class="canvas-wrap"><canvas id="game"></canvas>
-<div class="overlay" id="overlay"><h2>Brick Breaker</h2><p>Move the paddle with your mouse, finger, or arrow keys. Tap or press Space to launch the ball.</p><button id="startBtn">▶ Start</button></div>
-<div class="overlay hidden" id="gameover"><h2>Game Over</h2><p>Score: <b id="finalScore">0</b> · Best: <b id="finalBest">0</b></p><button id="restartBtn">↻ Play again</button></div>
+<a class="skip-link" href="#main">Skip to game</a>
+<header class="nav">
+<div class="nav-inner">
+<a class="brand" href="../index.html"><span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5v9l8-4.5Z" fill="#fff"/></svg></span>Tiny <em>Arcade</em></a>
+<nav class="nav-links" id="navLinks" aria-label="Main">
+<a href="../index.html">Home</a>
+<a href="../index.html#games">All Games</a>
+<a href="../about.html">About</a>
+<a href="../contact.html">Contact</a>
+</nav>
+<div class="nav-actions">
+<button class="icon-btn" id="themeBtn" type="button" aria-label="Switch to light theme">
+<svg class="theme-icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 13.5A8 8 0 1 1 10.5 4 6.5 6.5 0 0 0 20 13.5Z"/></svg>
+<svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5 5l1.6 1.6M17.4 17.4 19 19M19 5l-1.6 1.6M6.6 17.4 5 19"/></svg>
+</button>
+<button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
 </div>
-<p class="hint">Where the ball hits the paddle steers it: hit near an edge to send it off at an angle.</p>
-<p class="back"><a href="../index.html">← Back to arcade</a></p>
+</div>
+</header>
+<main id="main" class="wrap game-page" data-game="breaker">
+<div class="game-head">
+<a class="back-link" href="../index.html">← Arcade</a>
+<div class="game-title"><h1>Brick Breaker</h1><span class="tag violet">Arcade</span></div>
+<div class="game-actions">
+<button class="fav-btn" type="button" data-fav="breaker" aria-pressed="false" aria-label="Add to favourites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8Z"/></svg></button>
+<button class="hud-btn" type="button" data-fullscreen aria-label="Fullscreen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V5a1 1 0 0 1 1-1h4M15 4h4a1 1 0 0 1 1 1v4M20 15v4a1 1 0 0 1-1 1h-4M9 20H5a1 1 0 0 1-1-1v-4"/></svg><span class="fs-label">Fullscreen</span></button>
+</div>
+</div>
+<div class="hud">
+<span class="stat">Score<b id="score">0</b></span>
+<span class="stat">Lives<b id="lives">3</b></span>
+<span class="stat">Best<b id="best">0</b></span>
+<span class="spacer"></span>
+<button class="hud-btn" id="pauseBtn" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>Pause</button>
+</div>
+<div class="stage wide" id="stage" tabindex="0" aria-label="Brick Breaker game area">
+<canvas id="game"></canvas>
+<div class="overlay" id="overlay">
+<div class="overlay-card">
+<h2>Brick Breaker</h2>
+<p>Move the paddle, keep the ball alive, and smash every brick. Clear the board to reach the next level.</p>
+<button class="btn btn-primary btn-lg" id="startBtn" type="button">▶ Start Game</button>
+<p class="keys-hint">Mouse, finger, or arrow keys move the paddle. Tap or Space launches the ball.</p>
+</div>
+</div>
+<div class="overlay hidden" id="pauseOverlay">
+<div class="overlay-card">
+<h2>Paused</h2>
+<p>The ball is frozen mid-flight. Ready when you are.</p>
+<div class="overlay-actions">
+<button class="btn btn-primary" id="resumeBtn" type="button">Resume</button>
+<button class="btn btn-ghost" id="pauseRestartBtn" type="button">Restart</button>
+</div>
+</div>
+</div>
+<div class="overlay hidden" id="levelOverlay">
+<div class="overlay-card">
+<h2 id="levelTitle">Level Complete!</h2>
+<p>Every brick smashed. The next level is faster — and worth a 50 point bonus.</p>
+<div class="overlay-actions">
+<button class="btn btn-primary" id="nextLevelBtn" type="button">Next Level →</button>
+</div>
+</div>
+</div>
+<div class="overlay hidden" id="gameover">
+<div class="overlay-card">
+<h2>Game Over</h2>
+<div class="ov-stats"><span>Score<b id="finalScore">0</b></span><span>Best<b id="finalBest">0</b></span></div>
+<div class="overlay-actions">
+<button class="btn btn-primary" id="restartBtn" type="button">↻ Play Again</button>
+<a class="btn btn-ghost" href="../index.html">Back to Arcade</a>
+</div>
+</div>
+</div>
+</div>
+<details class="panel">
+<summary>How to play</summary>
+<div class="panel-body">
+<p>Bounce the ball off the paddle to smash the bricks. Don't let the ball fall past the paddle.</p>
+<ul>
+<li><strong>Phone:</strong> drag your finger to move the paddle. Tap to launch the ball.</li>
+<li><strong>Computer:</strong> move the mouse, or use <kbd>←</kbd> and <kbd>→</kbd>. Press <kbd>Space</kbd> to launch, <kbd>P</kbd> to pause.</li>
+<li>Where the ball hits the paddle steers it: hit near an edge to send it off at an angle.</li>
+<li>Each brick scores 10 points. Clearing a level adds 50 points and speeds the ball up.</li>
+<li>You have 3 lives. Your best score is saved on this device only.</li>
+</ul>
+</div>
+</details>
 </main>
-<footer class="site"><a href="../about.html">About</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms</a><a href="../contact.html">Contact</a><p>© 2026 Tiny Arcade. All games are original and free to play.</p></footer>
+<footer class="site">
+<div class="footer-grid">
+<div class="footer-brand">
+<a class="brand" href="../index.html"><span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5v9l8-4.5Z" fill="#fff"/></svg></span>Tiny <em>Arcade</em></a>
+<p>Free mini games in your browser. No downloads, no sign-up — just play.</p>
+<div class="share-row"><span style="color:var(--muted);font-size:.85rem;font-weight:600">Share:</span><a data-share="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a><a data-share="telegram" href="#" target="_blank" rel="noopener">Telegram</a><a data-share="facebook" href="#" target="_blank" rel="noopener">Facebook</a></div>
+</div>
+<div class="footer-col">
+<h4>Games</h4>
+<ul>
+<li><a href="fruit-slice.html">Fruit Slice</a></li>
+<li><a href="snake.html">Snake</a></li>
+<li><a href="breaker.html">Brick Breaker</a></li>
+<li><a href="memory.html">Memory Match</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Site</h4>
+<ul>
+<li><a href="../about.html">About</a></li>
+<li><a href="../privacy.html">Privacy Policy</a></li>
+<li><a href="../terms.html">Terms</a></li>
+<li><a href="../contact.html">Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Tiny Arcade. All games are original and free to play.</span>
+<span>Made for players, in the browser.</span>
+</div>
+</footer>
+<script src="../js/arcade.js"></script>
 <script src="../js/breaker.js"></script>
 </body>
 </html>

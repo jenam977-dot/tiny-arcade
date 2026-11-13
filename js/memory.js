@@ -11,9 +11,14 @@
   var finalBest = document.getElementById('finalBest');
   var startBtn = document.getElementById('startBtn');
   var restartBtn = document.getElementById('restartBtn');
+  var pauseOverlay = document.getElementById('pauseOverlay');
+  var pauseBtn = document.getElementById('pauseBtn');
+  var resumeBtn = document.getElementById('resumeBtn');
+  var pauseRestartBtn = document.getElementById('pauseRestartBtn');
   var EMOJIS = ['🍕', '🚀', '🎸', '🐶', '🌈', '⚽', '🎁', '🦄'];
   var flipped = [], locked = false, moves = 0, matched = 0;
   var seconds = 0, timer = null, started = false, bestMoves = 0;
+  var paused = false, won = false;
   try { bestMoves = parseInt(localStorage.getItem('tinyarcade_memory_best') || '0', 10) || 0; } catch (e) {}
   bestEl.textContent = bestMoves || '—';
 
@@ -44,11 +49,13 @@
   function reset() {
     flipped = []; locked = false; moves = 0; matched = 0;
     seconds = 0; started = false;
+    paused = false; won = false;
     clearInterval(timer); timer = null;
     movesEl.textContent = '0';
     timeEl.textContent = '0:00';
     overlay.classList.add('hidden');
     gameoverEl.classList.add('hidden');
+    pauseOverlay.classList.add('hidden');
     build();
   }
 
@@ -61,8 +68,32 @@
     }, 1000);
   }
 
+  function pauseGame() {
+    if (!started || won || paused) return;
+    paused = true;
+    clearInterval(timer);
+    timer = null;
+    pauseOverlay.classList.remove('hidden');
+  }
+  function resumeGame() {
+    if (!paused) return;
+    paused = false;
+    pauseOverlay.classList.add('hidden');
+    timer = setInterval(function () {
+      seconds++;
+      timeEl.textContent = fmt(seconds);
+    }, 1000);
+  }
+  pauseBtn.addEventListener('click', pauseGame);
+  resumeBtn.addEventListener('click', resumeGame);
+  pauseRestartBtn.addEventListener('click', reset);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') { if (paused) resumeGame(); else pauseGame(); }
+  });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) pauseGame(); });
+
   function flip(card) {
-    if (locked) return;
+    if (locked || paused || won) return;
     if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
     startTimer();
     card.classList.add('flipped');
@@ -90,6 +121,9 @@
   }
 
   function win() {
+    won = true;
+    paused = false;
+    pauseOverlay.classList.add('hidden');
     clearInterval(timer);
     var isBest = !bestMoves || moves < bestMoves;
     if (isBest) {

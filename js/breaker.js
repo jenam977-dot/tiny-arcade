@@ -11,12 +11,19 @@
   var finalBest = document.getElementById('finalBest');
   var startBtn = document.getElementById('startBtn');
   var restartBtn = document.getElementById('restartBtn');
+  var pauseOverlay = document.getElementById('pauseOverlay');
+  var pauseBtn = document.getElementById('pauseBtn');
+  var resumeBtn = document.getElementById('resumeBtn');
+  var pauseRestartBtn = document.getElementById('pauseRestartBtn');
+  var levelOverlay = document.getElementById('levelOverlay');
+  var levelTitle = document.getElementById('levelTitle');
+  var nextLevelBtn = document.getElementById('nextLevelBtn');
   var W = 0, H = 0, lastW = 0;
   var COLS = 8, BRICK_GAP = 6, TOP = 64, BRICK_H = 22;
   var ROW_COLORS = ['#ff2e9b', '#ff9f1c', '#ffd60a', '#38d996', '#00ddeb'];
   var paddle, ball, bricks;
   var score = 0, lives = 3, level = 1, best = 0;
-  var running = false, stuck = true, last = 0, msg = '', msgUntil = 0;
+  var running = false, stuck = true, last = 0, paused = false, levelPending = false;
   var keys = {};
   try { best = parseInt(localStorage.getItem('tinyarcade_breaker_best') || '0', 10) || 0; } catch (e) {}
   best = best || 0;
@@ -74,7 +81,7 @@
   }
 
   function launch() {
-    if (!stuck || !running) return;
+    if (!stuck || !running || paused || levelPending) return;
     var sp = ballSpeed();
     ball.vx = sp * 0.35 * (Math.random() < 0.5 ? -1 : 1);
     ball.vy = -sp;
@@ -94,7 +101,11 @@
     setup();
     overlay.classList.add('hidden');
     gameoverEl.classList.add('hidden');
+    pauseOverlay.classList.add('hidden');
+    levelOverlay.classList.add('hidden');
     running = true;
+    paused = false;
+    levelPending = false;
     last = performance.now();
   }
 
@@ -102,6 +113,10 @@
 
   function endGame() {
     running = false;
+    paused = false;
+    levelPending = false;
+    pauseOverlay.classList.add('hidden');
+    levelOverlay.classList.add('hidden');
     if (score > best) {
       best = score;
       try { localStorage.setItem('tinyarcade_breaker_best', String(best)); } catch (e) {}
@@ -111,11 +126,32 @@
     gameoverEl.classList.remove('hidden');
   }
 
-  function addMsg(text) { msg = text; msgUntil = performance.now() + 1400; }
+  function pauseGame() {
+    if (!running || paused || levelPending) return;
+    paused = true;
+    pauseOverlay.classList.remove('hidden');
+  }
+  function resumeGame() {
+    if (!paused) return;
+    paused = false;
+    pauseOverlay.classList.add('hidden');
+    last = performance.now();
+  }
+  pauseBtn.addEventListener('click', pauseGame);
+  resumeBtn.addEventListener('click', resumeGame);
+  pauseRestartBtn.addEventListener('click', function () { pauseOverlay.classList.add('hidden'); levelOverlay.classList.add('hidden'); start(); });
+  nextLevelBtn.addEventListener('click', function () {
+    levelOverlay.classList.add('hidden');
+    levelPending = false;
+    buildLevel(true);
+    last = performance.now();
+  });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) pauseGame(); });
 
   function step(now) {
     requestAnimationFrame(step);
     if (!running) { draw(); return; }
+    if (paused || levelPending) { last = now; draw(); return; }
     var dt = Math.min(2.5, Math.max(0.4, (now - last) / 16.667));
     last = now;
     if (keys.left) paddle.x -= 7 * dt;
@@ -155,10 +191,12 @@
       var cleared = true;
       for (var j = 0; j < bricks.length; j++) if (bricks[j].alive) { cleared = false; break; }
       if (cleared) {
+        var clearedLevel = level;
         level++;
         score += 50;
-        buildLevel(true);
-        addMsg('Level ' + level);
+        levelPending = true;
+        levelTitle.textContent = 'Level ' + clearedLevel + ' Complete!';
+        levelOverlay.classList.remove('hidden');
       }
       if (ball.y - ball.r > H) {
         lives--;
@@ -199,7 +237,6 @@
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 22px system-ui, sans-serif';
     ctx.textAlign = 'center';
-    if (performance.now() < msgUntil) ctx.fillText(msg, W / 2, H / 2);
     if (stuck && running) {
       ctx.font = '16px system-ui, sans-serif';
       ctx.fillStyle = '#a7b2d8';
@@ -217,7 +254,8 @@
   });
   canvas.addEventListener('pointerdown', function () { launch(); });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') { keys.left = true; e.preventDefault(); }
+    if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') { if (paused) resumeGame(); else pauseGame(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') { keys.left = true; e.preventDefault(); }
     else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') { keys.right = true; e.preventDefault(); }
     else if (e.key === ' ') {
       if (!running) start();

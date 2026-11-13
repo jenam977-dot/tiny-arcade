@@ -5,31 +5,310 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tiny Arcade — Free Mini Games in Your Browser</title>
 <meta name="description" content="Tiny Arcade: free mini games you can play instantly in your browser. Slice fruit, play Snake, break bricks and match cards. No downloads, no sign-up.">
+<script>(function(){try{var t=localStorage.getItem('tinyarcade_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="site"><a class="logo" href="index.html">🎮 Tiny <b>Arcade</b></a><nav><a href="index.html">Games</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></header>
-<main>
-<section class="hero">
-<h1>Free mini games, right in your browser.</h1>
-<p>No downloads. No sign-up. Pick a game and play — on your phone or computer. New games are added regularly.</p>
-</section>
-<div class="grid">
-<a class="card" href="games/fruit-slice.html"><div class="emoji">🔪</div><h2>Fruit Slice</h2><p>Swipe to slice flying fruit. Dodge the bombs, beat your best score.</p><span class="play">Play now</span></a>
-<a class="card" href="games/snake.html"><div class="emoji">🐍</div><h2>Snake</h2><p>The classic. Eat, grow, and don't bite yourself. Gets faster as you go.</p><span class="play">Play now</span></a>
-<a class="card" href="games/breaker.html"><div class="emoji">🧱</div><h2>Brick Breaker</h2><p>Bounce the ball, smash every brick, clear the level. Three lives.</p><span class="play">Play now</span></a>
-<a class="card" href="games/memory.html"><div class="emoji">🃏</div><h2>Memory Match</h2><p>Flip the cards and find all 8 pairs in as few moves as you can.</p><span class="play">Play now</span></a>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav">
+<div class="nav-inner">
+<a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5v9l8-4.5Z" fill="#fff"/></svg></span>Tiny <em>Arcade</em></a>
+<nav class="nav-links" id="navLinks" aria-label="Main">
+<a href="index.html" aria-current="page">Home</a>
+<a href="#games">All Games</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</nav>
+<div class="nav-actions">
+<button class="icon-btn" id="themeBtn" type="button" aria-label="Switch to light theme">
+<svg class="theme-icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 13.5A8 8 0 1 1 10.5 4 6.5 6.5 0 0 0 20 13.5Z"/></svg>
+<svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5 5l1.6 1.6M17.4 17.4 19 19M19 5l-1.6 1.6M6.6 17.4 5 19"/></svg>
+</button>
+<button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
 </div>
-<section>
-<h2>How to play</h2>
-<p>Every game runs entirely in your browser. On a phone, use touch. On a computer, use your mouse and keyboard. Your best scores are saved only on your own device — nothing is uploaded anywhere.</p>
-<div class="share-row"><span>Share Tiny Arcade:</span><a data-share="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a><a data-share="telegram" href="#" target="_blank" rel="noopener">Telegram</a><a data-share="facebook" href="#" target="_blank" rel="noopener">Facebook</a></div>
-<p class="hint">Tip: bookmark this page to come back for new games.</p>
+</div>
+</header>
+<main id="main">
+<section class="hero">
+<div class="hero-glow" aria-hidden="true"></div>
+<div class="wrap hero-inner">
+<div>
+<h1>PLAY. EXPLORE.<br><span class="grad-text">REPEAT.</span></h1>
+<p class="hero-sub">Your favourite mini arcade games. Instantly playable, completely free.</p>
+<div class="hero-cta">
+<a class="btn btn-primary btn-lg" href="games/fruit-slice.html">▶ Play Now</a>
+<a class="btn btn-ghost btn-lg" href="#games">Explore Games</a>
+</div>
+<div class="hero-notes">
+<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg>No downloads</span>
+<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg>No sign-up</span>
+<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg>Free to play</span>
+</div>
+</div>
+<div class="hero-visual" aria-hidden="true">
+<div class="hero-card">
+<svg class="scene" viewBox="0 0 520 360" role="img" aria-label="Retro arcade cabinet illustration">
+<defs>
+<linearGradient id="cab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#232848"/><stop offset="1" stop-color="#12152b"/></linearGradient>
+<linearGradient id="scr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b2a6b"/><stop offset="1" stop-color="#0b0e1e"/></linearGradient>
+</defs>
+<circle cx="80" cy="70" r="46" fill="#7c5cff" opacity="0.18"/>
+<circle cx="448" cy="290" r="58" fill="#2f7bff" opacity="0.16"/>
+<rect x="118" y="18" width="284" height="324" rx="26" fill="url(#cab)" stroke="rgba(255,255,255,0.12)"/>
+<rect x="142" y="42" width="236" height="152" rx="14" fill="url(#scr)" stroke="rgba(255,255,255,0.1)"/>
+<circle cx="190" cy="100" r="24" fill="#ff5a5a"/>
+<path d="M166 100a24 24 0 0 1 48 0" fill="none" stroke="#2f9e44" stroke-width="6"/>
+<circle cx="182" cy="96" r="2.6" fill="#2b1a1a"/><circle cx="196" cy="104" r="2.6" fill="#2b1a1a"/><circle cx="190" cy="90" r="2.2" fill="#2b1a1a"/>
+<path d="M250 150 C 275 118, 300 140, 318 108" fill="none" stroke="#38d996" stroke-width="13" stroke-linecap="round"/>
+<circle cx="322" cy="102" r="10" fill="#38d996"/><circle cx="325" cy="99" r="3" fill="#070812"/>
+<rect x="248" y="66" width="30" height="13" rx="3.5" fill="#7c5cff"/><rect x="282" y="66" width="30" height="13" rx="3.5" fill="#2f7bff"/><rect x="316" y="66" width="30" height="13" rx="3.5" fill="#22d3ee"/>
+<rect x="265" y="84" width="30" height="13" rx="3.5" fill="#ffb347"/><rect x="299" y="84" width="30" height="13" rx="3.5" fill="#fb4d6d"/>
+<circle cx="356" cy="168" r="7" fill="#22d3ee"/>
+<rect x="142" y="212" width="236" height="66" rx="14" fill="#1a1e3d" stroke="rgba(255,255,255,0.08)"/>
+<circle cx="188" cy="245" r="17" fill="#0b0e1e" stroke="rgba(255,255,255,0.14)"/>
+<path d="M188 245 200 224" stroke="#c6cadf" stroke-width="6" stroke-linecap="round"/>
+<circle cx="202" cy="220" r="11" fill="#7c5cff"/>
+<circle cx="300" cy="240" r="11" fill="#22d3ee"/><circle cx="326" cy="252" r="11" fill="#fb4d6d"/><circle cx="352" cy="240" r="11" fill="#ffb347"/>
+<rect x="158" y="292" width="204" height="18" rx="9" fill="#0b0e1e"/>
+<path d="M52 300l4.5 10 10 4.5-10 4.5-4.5 10-4.5-10-10-4.5 10-4.5Z" fill="#22d3ee" opacity="0.8"/>
+<path d="M462 60l3.5 8 8 3.5-8 3.5-3.5 8-3.5-8-8-3.5 8-3.5Z" fill="#ffb347" opacity="0.85"/>
+</svg>
+</div>
+<span class="float-chip chip-a"><span class="dot" style="background:#38d996"></span>Instant play</span>
+<span class="float-chip chip-b"><span class="dot" style="background:#7c5cff"></span>4 games live</span>
+</div>
+</div>
+</section>
+
+<section class="section" id="games">
+<div class="wrap">
+<div class="section-head">
+<h2>Featured games</h2>
+<p>Four original mini games, ready the second you tap. Search, filter, and find your next favourite.</p>
+</div>
+<div class="discovery-bar">
+<div class="search-box">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
+<input id="searchInput" type="search" placeholder="Search games…" aria-label="Search games" autocomplete="off">
+</div>
+<div class="chips" role="group" aria-label="Filter by category">
+<button class="chip" type="button" data-filter="all" aria-pressed="true">All Games</button>
+<button class="chip" type="button" data-filter="action" aria-pressed="false">Action</button>
+<button class="chip" type="button" data-filter="classic" aria-pressed="false">Classic</button>
+<button class="chip" type="button" data-filter="arcade" aria-pressed="false">Arcade</button>
+<button class="chip" type="button" data-filter="puzzle" aria-pressed="false">Puzzle</button>
+</div>
+</div>
+<p class="result-count" id="resultCount" aria-live="polite"></p>
+<div class="grid" id="gameGrid">
+<article class="card" data-slug="fruit-slice" data-category="action" data-title="Fruit Slice" data-desc="Swipe to slice flying fruit. Dodge the bombs, beat your best score.">
+<div class="card-art">
+<svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Fruit Slice artwork">
+<defs><linearGradient id="art-fs" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#33185f"/><stop offset="1" stop-color="#0b0e1e"/></linearGradient></defs>
+<rect width="400" height="225" fill="url(#art-fs)"/>
+<circle cx="330" cy="38" r="60" fill="#7c5cff" opacity="0.22"/>
+<path d="M30 200 A78 78 0 0 1 186 200 Z" fill="#2f9e44"/>
+<path d="M44 200 A64 64 0 0 1 172 200 Z" fill="#ff5a5a"/>
+<circle cx="86" cy="176" r="4" fill="#2b1a1a"/><circle cx="112" cy="162" r="4" fill="#2b1a1a"/><circle cx="136" cy="180" r="4" fill="#2b1a1a"/><circle cx="100" cy="190" r="3.4" fill="#2b1a1a"/>
+<circle cx="296" cy="92" r="48" fill="#ff9f1c"/>
+<circle cx="296" cy="92" r="38" fill="#ffc46b"/>
+<path d="M296 54v76M258 92h76M269 65l54 54M323 65l-54 54" stroke="#ff9f1c" stroke-width="4"/>
+<circle cx="296" cy="92" r="7" fill="#ff9f1c"/>
+<circle cx="228" cy="176" r="17" fill="#ff4d6d"/>
+<path d="M228 159q6-12 16-12" stroke="#2f9e44" stroke-width="4" fill="none" stroke-linecap="round"/>
+<path d="M16 34 384 196" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+<path d="M30 22 372 172" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+</svg>
+<a class="art-link" href="games/fruit-slice.html" aria-label="Play Fruit Slice"></a>
+<button class="fav-btn" type="button" data-fav="fruit-slice" aria-pressed="false" aria-label="Add to favourites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8Z"/></svg></button>
+</div>
+<div class="card-body">
+<h3><a href="games/fruit-slice.html">Fruit Slice</a></h3>
+<p>Swipe to slice flying fruit. Dodge the bombs, beat your best score.</p>
+<div class="card-foot"><span class="tag">Action</span><a class="btn btn-primary btn-sm" href="games/fruit-slice.html">Play Now</a></div>
+</div>
+</article>
+<article class="card" data-slug="snake" data-category="classic" data-title="Snake" data-desc="The classic. Eat, grow, and don't bite yourself. Gets faster as you go.">
+<div class="card-art">
+<svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Snake artwork">
+<defs>
+<linearGradient id="art-sn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14295e"/><stop offset="1" stop-color="#0b0e1e"/></linearGradient>
+<pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#ffffff" opacity="0.1"/></pattern>
+</defs>
+<rect width="400" height="225" fill="url(#art-sn)"/>
+<rect width="400" height="225" fill="url(#dots)"/>
+<circle cx="82" cy="58" r="20" fill="#ff4d6d"/>
+<path d="M82 38q4-14 18-14" stroke="#2f9e44" stroke-width="4" fill="none" stroke-linecap="round"/>
+<path d="M52 178 C 130 178, 150 120, 210 118 S 320 150, 352 84" fill="none" stroke="#2f9e44" stroke-width="30" stroke-linecap="round"/>
+<path d="M52 178 C 130 178, 150 120, 210 118 S 320 150, 352 84" fill="none" stroke="#38d996" stroke-width="30" stroke-linecap="round" stroke-dasharray="0.1 46"/>
+<circle cx="356" cy="76" r="19" fill="#38d996"/>
+<circle cx="362" cy="70" r="4.5" fill="#070812"/>
+<circle cx="364" cy="68" r="1.6" fill="#fff"/>
+</svg>
+<a class="art-link" href="games/snake.html" aria-label="Play Snake"></a>
+<button class="fav-btn" type="button" data-fav="snake" aria-pressed="false" aria-label="Add to favourites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8Z"/></svg></button>
+</div>
+<div class="card-body">
+<h3><a href="games/snake.html">Snake</a></h3>
+<p>The classic. Eat, grow, and don't bite yourself. Gets faster as you go.</p>
+<div class="card-foot"><span class="tag blue">Classic</span><a class="btn btn-primary btn-sm" href="games/snake.html">Play Now</a></div>
+</div>
+</article>
+<article class="card" data-slug="breaker" data-category="arcade" data-title="Brick Breaker" data-desc="Bounce the ball, smash every brick, clear the level. Three lives.">
+<div class="card-art">
+<svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Brick Breaker artwork">
+<defs><linearGradient id="art-bb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#241547"/><stop offset="1" stop-color="#0b0e1e"/></linearGradient></defs>
+<rect width="400" height="225" fill="url(#art-bb)"/>
+<g>
+<rect x="52" y="34" width="56" height="20" rx="5" fill="#7c5cff"/><rect x="114" y="34" width="56" height="20" rx="5" fill="#2f7bff"/><rect x="176" y="34" width="56" height="20" rx="5" fill="#22d3ee"/><rect x="238" y="34" width="56" height="20" rx="5" fill="#ffb347"/><rect x="300" y="34" width="56" height="20" rx="5" fill="#fb4d6d"/>
+<rect x="52" y="60" width="56" height="20" rx="5" fill="#2f7bff"/><rect x="114" y="60" width="56" height="20" rx="5" fill="#22d3ee"/><rect x="238" y="60" width="56" height="20" rx="5" fill="#fb4d6d"/><rect x="300" y="60" width="56" height="20" rx="5" fill="#7c5cff"/>
+<rect x="52" y="86" width="56" height="20" rx="5" fill="#22d3ee"/><rect x="300" y="86" width="56" height="20" rx="5" fill="#2f7bff"/>
+</g>
+<circle cx="196" cy="118" r="5" fill="#22d3ee" opacity="0.35"/><circle cx="206" cy="132" r="7" fill="#22d3ee" opacity="0.6"/>
+<circle cx="218" cy="150" r="11" fill="#22d3ee"/>
+<rect x="150" y="188" width="100" height="13" rx="6.5" fill="#eef0ff"/>
+</svg>
+<a class="art-link" href="games/breaker.html" aria-label="Play Brick Breaker"></a>
+<button class="fav-btn" type="button" data-fav="breaker" aria-pressed="false" aria-label="Add to favourites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8Z"/></svg></button>
+</div>
+<div class="card-body">
+<h3><a href="games/breaker.html">Brick Breaker</a></h3>
+<p>Bounce the ball, smash every brick, clear the level. Three lives.</p>
+<div class="card-foot"><span class="tag violet">Arcade</span><a class="btn btn-primary btn-sm" href="games/breaker.html">Play Now</a></div>
+</div>
+</article>
+<article class="card" data-slug="memory" data-category="puzzle" data-title="Memory Match" data-desc="Flip the cards and find all 8 pairs in as few moves as you can.">
+<div class="card-art">
+<svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Memory Match artwork">
+<defs><linearGradient id="art-mm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1c2b52"/><stop offset="1" stop-color="#0b0e1e"/></linearGradient></defs>
+<rect width="400" height="225" fill="url(#art-mm)"/>
+<g>
+<rect x="88" y="34" width="92" height="92" rx="14" fill="#1a1e3d" stroke="#7c5cff" stroke-width="2"/>
+<rect x="196" y="34" width="92" height="92" rx="14" fill="#1a1e3d" stroke="#7c5cff" stroke-width="2"/>
+<rect x="88" y="138" width="92" height="92" rx="14" fill="#1a1e3d" stroke="#7c5cff" stroke-width="2"/>
+<rect x="196" y="138" width="92" height="92" rx="14" fill="#eef0ff"/>
+</g>
+<circle cx="134" cy="80" r="17" fill="none" stroke="#7c5cff" stroke-width="3" opacity="0.8"/>
+<circle cx="242" cy="80" r="17" fill="none" stroke="#7c5cff" stroke-width="3" opacity="0.8"/>
+<circle cx="134" cy="184" r="17" fill="none" stroke="#7c5cff" stroke-width="3" opacity="0.8"/>
+<path d="M242 158l7.5 15.5 17 2.4-12.3 12 2.9 17-15.1-8-15.1 8 2.9-17-12.3-12 17-2.4Z" fill="#ffb347"/>
+<path d="M330 52l3.5 8 8 3.5-8 3.5-3.5 8-3.5-8-8-3.5 8-3.5Z" fill="#22d3ee" opacity="0.9"/>
+<path d="M52 168l3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" fill="#ffb347" opacity="0.85"/>
+</svg>
+<a class="art-link" href="games/memory.html" aria-label="Play Memory Match"></a>
+<button class="fav-btn" type="button" data-fav="memory" aria-pressed="false" aria-label="Add to favourites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8Z"/></svg></button>
+</div>
+<div class="card-body">
+<h3><a href="games/memory.html">Memory Match</a></h3>
+<p>Flip the cards and find all 8 pairs in as few moves as you can.</p>
+<div class="card-foot"><span class="tag amber">Puzzle</span><a class="btn btn-primary btn-sm" href="games/memory.html">Play Now</a></div>
+</div>
+</article>
+</div>
+<div class="empty-state hidden" id="noResults">
+<p><strong>No games match your search.</strong><br>Try a different word or filter.</p>
+</div>
+</div>
+</section>
+
+<section class="section" id="recent">
+<div class="wrap">
+<div class="section-head">
+<h2>Recently played</h2>
+<p>Jump back into the games you played last. Stored only in your browser.</p>
+</div>
+<div class="grid" id="recentGrid"></div>
+<div class="empty-state" id="recentEmpty">
+<p><strong>Nothing here yet.</strong><br>Games you play will show up here for a quick return.</p>
+</div>
+</div>
+</section>
+
+<section class="section" id="favourites">
+<div class="wrap">
+<div class="section-head">
+<h2>Your favourites</h2>
+<p>Tap the star on any game to keep it here.</p>
+</div>
+<div class="grid" id="favGrid"></div>
+<div class="empty-state" id="favEmpty">
+<p><strong>No favourites yet.</strong><br>Tap the star on a game card to save it here.</p>
+</div>
+</div>
+</section>
+
+<section class="section" id="about">
+<div class="wrap">
+<div class="section-head">
+<h2>About Tiny Arcade</h2>
+</div>
+<div class="about-text">
+<p>Tiny Arcade is a free browser gaming platform. Every game runs entirely in your web browser — there is nothing to download, nothing to install, and no account to create. Open a game, press Start, and play.</p>
+<p>The games are original works, written in plain HTML, CSS, and JavaScript. New games are added regularly.</p>
+</div>
+<div class="features">
+<div class="feature">
+<div class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v10M7.5 10 12 14.5 16.5 10M4 17v2.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V17"/><path d="M4 4l16 16" stroke-width="2.4"/></svg></div>
+<h3>No downloads</h3>
+<p>Everything plays instantly in the browser.</p>
+</div>
+<div class="feature">
+<div class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/><path d="M4 4l16 16" stroke-width="2.4"/></svg></div>
+<h3>No sign-up</h3>
+<p>No accounts, no passwords, no waiting.</p>
+</div>
+<div class="feature">
+<div class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12.5 12.5 3.5H21v8.5l-9 9a2.1 2.1 0 0 1-3 0l-5.5-5.5a2.1 2.1 0 0 1 0-3Z"/><circle cx="16" cy="8.5" r="1.6" fill="currentColor" stroke="none"/></svg></div>
+<h3>Free to play</h3>
+<p>Every game is free, with nothing locked away.</p>
+</div>
+<div class="feature">
+<div class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="13" height="10" rx="2"/><path d="M7 18h6M9 14v4"/><rect x="15.5" y="10" width="6" height="10" rx="1.8"/><path d="M18.5 17.5h.01"/></svg></div>
+<h3>Mobile &amp; desktop</h3>
+<p>Touch controls on phones, keyboard and mouse on computers.</p>
+</div>
+<div class="feature">
+<div class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v6a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4.5a2.5 2.5 0 0 0 2.6 4M17 6h2.5a2.5 2.5 0 0 1-2.6 4"/></svg></div>
+<h3>Best scores saved</h3>
+<p>Your best scores stay on your own device.</p>
+</div>
+</div>
+</div>
 </section>
 </main>
-<footer class="site"><a href="about.html">About</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a><p>© 2026 Tiny Arcade. All games are original and free to play.</p></footer>
-<script>
-(function(){var u=encodeURIComponent(location.href);var t=encodeURIComponent('Play free mini games at Tiny Arcade');var m={whatsapp:'https://wa.me/?text='+t+'%20'+u,telegram:'https://t.me/share/url?url='+u+'&text='+t,facebook:'https://www.facebook.com/sharer/sharer.php?u='+u};document.querySelectorAll('[data-share]').forEach(function(a){var k=a.getAttribute('data-share');if(m[k])a.href=m[k];});})();
-</script>
+<footer class="site">
+<div class="footer-grid">
+<div class="footer-brand">
+<a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5v9l8-4.5Z" fill="#fff"/></svg></span>Tiny <em>Arcade</em></a>
+<p>Free mini games in your browser. No downloads, no sign-up — just play.</p>
+<div class="share-row"><span style="color:var(--muted);font-size:.85rem;font-weight:600">Share:</span><a data-share="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a><a data-share="telegram" href="#" target="_blank" rel="noopener">Telegram</a><a data-share="facebook" href="#" target="_blank" rel="noopener">Facebook</a></div>
+</div>
+<div class="footer-col">
+<h4>Games</h4>
+<ul>
+<li><a href="games/fruit-slice.html">Fruit Slice</a></li>
+<li><a href="games/snake.html">Snake</a></li>
+<li><a href="games/breaker.html">Brick Breaker</a></li>
+<li><a href="games/memory.html">Memory Match</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Site</h4>
+<ul>
+<li><a href="about.html">About</a></li>
+<li><a href="privacy.html">Privacy Policy</a></li>
+<li><a href="terms.html">Terms</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Tiny Arcade. All games are original and free to play.</span>
+<span>Made for players, in the browser.</span>
+</div>
+</footer>
+<script src="js/arcade.js"></script>
 </body>
 </html>
