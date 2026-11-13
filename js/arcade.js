@@ -138,6 +138,16 @@
     }
   }
 
+  /* Exit button inside the stage (visible only while fullscreen) */
+  var fsExit = stageEl ? stageEl.querySelector('[data-fs-exit]') : null;
+  if (fsExit) {
+    fsExit.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    });
+  }
+
   /* Homepage: search + category filters */
   var grid = document.getElementById('gameGrid');
   if (grid) {

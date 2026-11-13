@@ -560,8 +560,41 @@ footer.site {
   overflow: hidden;
   box-shadow: var(--shadow);
 }
-.stage:fullscreen { border-radius: 0; border: 0; }
-.stage:fullscreen canvas { height: 100%; }
+.stage:fullscreen, .stage:-webkit-full-screen {
+  border-radius: 0;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #05070f;
+}
+.stage:fullscreen > canvas, .stage:-webkit-full-screen > canvas,
+.stage:fullscreen > #board, .stage:-webkit-full-screen > #board { flex: none; }
+/* Fixed-size boards (Snake) keep their square shape and fit the screen
+   instead of stretching. Resizing canvases (Fruit Slice, Brick Breaker)
+   carry inline sizes from JS, which override this rule. */
+.stage:fullscreen canvas, .stage:-webkit-full-screen canvas {
+  width: min(100%, 100vh);
+  height: auto;
+  max-height: 100%;
+}
+.stage:fullscreen #board, .stage:-webkit-full-screen #board { width: min(100%, 560px); }
+.fs-exit {
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  border: 1px solid var(--border-strong);
+  background: rgba(7, 8, 18, 0.72);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.stage:fullscreen .fs-exit, .stage:-webkit-full-screen .fs-exit { display: inline-flex; align-items: center; gap: 6px; }
 .stage.wide { max-width: 880px; margin: 0 auto; }
 .stage.narrow { max-width: 540px; margin: 0 auto; }
 .stage canvas { display: block; width: 100%; touch-action: none; }

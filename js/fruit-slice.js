@@ -34,8 +34,13 @@
 
   function resize() {
     var wrap = canvas.parentElement;
-    W = wrap.clientWidth;
-    H = Math.round(Math.max(340, Math.min(560, W * 0.72)));
+    var fs = document.fullscreenElement === wrap || document.webkitFullscreenElement === wrap;
+    W = wrap.clientWidth || window.innerWidth;
+    if (fs) {
+      H = wrap.clientHeight || window.innerHeight;
+    } else {
+      H = Math.round(Math.max(340, Math.min(560, W * 0.72)));
+    }
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(W * dpr);
     canvas.height = Math.round(H * dpr);
@@ -44,6 +49,8 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   window.addEventListener('resize', resize);
+  document.addEventListener('fullscreenchange', function () { requestAnimationFrame(resize); });
+  document.addEventListener('webkitfullscreenchange', function () { requestAnimationFrame(resize); });
   resize();
 
   function rand(a, b) { return a + Math.random() * (b - a); }

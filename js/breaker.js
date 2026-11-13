@@ -30,8 +30,13 @@
 
   function resize() {
     var wrap = canvas.parentElement;
-    W = wrap.clientWidth;
-    H = Math.round(Math.max(420, Math.min(600, W * 1.15)));
+    var fs = document.fullscreenElement === wrap || document.webkitFullscreenElement === wrap;
+    W = wrap.clientWidth || window.innerWidth;
+    if (fs) {
+      H = wrap.clientHeight || window.innerHeight;
+    } else {
+      H = Math.round(Math.max(420, Math.min(600, W * 1.15)));
+    }
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(W * dpr);
     canvas.height = Math.round(H * dpr);
@@ -45,7 +50,12 @@
     }
     if (Math.abs(W - lastW) > 40) {
       lastW = W;
-      if (bricks) buildLevel(false);
+      if (bricks) {
+        var alive = [];
+        for (var ai = 0; ai < bricks.length; ai++) alive.push(bricks[ai].alive);
+        buildLevel(false);
+        for (var bi = 0; bi < bricks.length && bi < alive.length; bi++) bricks[bi].alive = alive[bi];
+      }
       if (stuck && ball && paddle) stickBall();
     }
   }
@@ -272,6 +282,8 @@
   startBtn.addEventListener('click', start);
   restartBtn.addEventListener('click', start);
   window.addEventListener('resize', resize);
+  document.addEventListener('fullscreenchange', function () { requestAnimationFrame(resize); });
+  document.addEventListener('webkitfullscreenchange', function () { requestAnimationFrame(resize); });
   resize();
   lastW = W;
   setup();
