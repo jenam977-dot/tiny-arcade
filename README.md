@@ -18,6 +18,19 @@ collapsible instructions, and a best score saved in the visitor's own browser
 (`localStorage`). Pause with the Pause button, `P`, or `Esc`; games also pause
 when the tab is hidden.
 
+## More games (extra/, 2026-11-13)
+
+Ten more games live in `extra/` as one single-page app (`extra/index.html` +
+`extra/app.js` + `extra/style.css`): Stack Snap, Orbit Switch, Gravity Flip,
+Memory Pulse, Perfect Pour, Gatekeeper, Maze Dash, Echo Hunt, Color Rule and
+One-Second Hero. They are kept separate from the four games above so the
+expansion can be maintained independently. The homepage links each game by
+hash (`extra/#stack`, ...); the app opens the hashed game on load, clears the
+hash when returning to its own home view, and records plays in the shared
+recently-played list under `extra-<id>` slugs. Best scores use separate
+`tinyArcadeExtra.best.*` keys. Homepage search, filters, favourites and
+recently-played cover both grids (`#gameGrid` and `#moreGrid`).
+
 ## Site features
 
 - `index.html`: hero, search + category filters (working), recently played,
@@ -34,6 +47,7 @@ when the tab is hidden.
 
 `index.html` (game grid), `about.html`, `privacy.html`, `terms.html`,
 `contact.html`, plus `robots.txt`, `sitemap.xml`, and `CNAME` (custom domain).
+`extra/` holds the More Games app (see above).
 
 ## Run locally
 

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090d18">
+  <meta name="description" content="Ten quick, replayable browser arcade games.">
+  <title>Tiny Arcade — New Games</title>
+  <link rel="stylesheet" href="style.css?v=20261113-3">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3175371468463396"
+       crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Tiny Arcade home"><span class="brand-mark">✦</span><span>TINY ARCADE <small>EXTRA</small></span></a>
+      <div class="top-actions">
+        <a class="back-btn" style="text-decoration:none" href="../">← Tiny Arcade</a>
+        <button id="backBtn" class="back-btn" type="button" hidden>← All games</button>
+        <span class="best-chip" id="bestChip" hidden>BEST <b id="bestValue">0</b></span>
+      </div>
+    </header>
+
+    <main id="app" class="app-main">
+      <section id="homeView">
+        <div class="hero">
+          <div class="eyebrow">10 NEW WAYS TO PLAY</div>
+          <h1>One more <span>round.</span></h1>
+          <p>Quick to learn. Tricky to master. Pick a game and beat your best.</p>
+          <div class="hero-pills"><span>◈ 10 mini-games</span><span>◉ Works on mobile</span><span>↗ Saves best scores here</span></div>
+        </div>
+        <div class="section-heading"><div><span class="eyebrow">THE ARCADE</span><h2>Choose your challenge</h2></div><span class="game-count">10 GAMES</span></div>
+        <div id="gameGrid" class="game-grid"></div>
+      </section>
+
+      <section id="gameView" hidden>
+        <div class="game-heading">
+          <div><div class="eyebrow" id="gameCategory">ARCADE GAME</div><h1 id="gameTitle">Game title</h1><p id="gameDescription"></p></div>
+          <div class="score-card"><span id="scoreLabel">SCORE</span><strong id="scoreValue">0</strong><small id="levelValue">LEVEL 1</small></div>
+        </div>
+        <div class="game-panel">
+          <div id="gameMessage" class="game-message" aria-live="polite">Ready?</div>
+          <div id="playfield" class="playfield"></div>
+          <div id="gameControls" class="game-controls"></div>
+        </div>
+        <p class="game-footnote">No sign-in. No purchases. Your best score is saved on this device.</p>
+      </section>
+    </main>
+    <footer class="footer"><span>Made for short, satisfying play sessions.</span><span>PLAY FAIR · TAKE A BREAK</span></footer>
+  </div>
+  <script src="app.js?v=20261113-3"></script>
+</body>
+</html>

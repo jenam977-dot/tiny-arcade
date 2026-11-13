@@ -148,7 +148,7 @@
     var chips = document.querySelectorAll('[data-filter]');
     var applyDiscovery = function () {
       var q = searchInput ? searchInput.value.trim().toLowerCase() : '';
-      var cards = grid.querySelectorAll('.card');
+      var cards = document.querySelectorAll('#gameGrid .card, #moreGrid .card');
       var shown = 0;
       for (var i = 0; i < cards.length; i++) {
         var c = cards[i];
@@ -177,7 +177,7 @@
   /* Recently played + favourites sections (cloned from the main grid) */
   function cloneCard(slug) {
     if (!grid) return null;
-    var src = grid.querySelector('.card[data-slug="' + slug + '"]');
+    var src = document.querySelector('.card[data-slug="' + slug + '"]');
     if (!src) return null;
     var clone = src.cloneNode(true);
     clone.classList.remove('hidden');
