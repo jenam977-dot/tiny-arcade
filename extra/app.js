@@ -665,3 +665,16 @@ renderCards();
   var h = (location.hash || '').replace('#', '');
   if (games.some(function (g) { return g.id === h; })) launchGame(h);
 })();
+
+/* Same-document hash changes (e.g. going from extra/ home to extra/#stack
+   without a reload) do not re-run the boot block above, so handle them here.
+   launchGame/showHome use replaceState, which does not fire hashchange,
+   so this cannot loop. */
+window.addEventListener('hashchange', function () {
+  var h = (location.hash || '').replace('#', '');
+  if (games.some(function (g) { return g.id === h; })) {
+    if (currentGame !== h) launchGame(h);
+  } else if (currentGame) {
+    showHome();
+  }
+});
