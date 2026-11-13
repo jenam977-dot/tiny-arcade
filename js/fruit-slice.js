@@ -79,16 +79,19 @@
     var hit = 0;
     for (var i = fruits.length - 1; i >= 0; i--) {
       var f = fruits[i];
+      if (!f) continue;
       if (f.sliced) continue;
-      if (segDist(x1, y1, x2, y2, f.x, f.y) < f.r) { doSlice(i); hit++; }
+      if (segDist(x1, y1, x2, y2, f.x, f.y) < f.r) { doSlice(i); hit++; if (!running) break; }
     }
     if (hit > 1) { addPop(W / 2, H * 0.3, 'COMBO x' + hit + '  +' + (hit * 10)); score += hit * 10; updateHud(); }
   }
 
   function doSlice(i) {
+    if (!running) return;
     var f = fruits.splice(i, 1)[0];
+    if (!f) return;
     if (f.bomb) {
-      lives--; flash = 14; shake = 10;
+      lives = Math.max(0, lives - 1); flash = 14; shake = 10;
       fruits.length = 0; halves.length = 0;
       addPop(f.x, f.y, 'BOOM!');
       updateHud();
@@ -113,9 +116,10 @@
   }
 
   function addPop(x, y, text) { pops.push({ x: x, y: y, text: text, life: 34 }); }
-  function updateHud() { scoreEl.textContent = score; livesEl.textContent = lives; bestEl.textContent = best; }
+  function updateHud() { scoreEl.textContent = score; livesEl.textContent = Math.max(0, lives); bestEl.textContent = best; }
 
   function endGame() {
+    if (!running) return;
     running = false;
     paused = false;
     pauseOverlay.classList.add('hidden');
@@ -192,8 +196,8 @@
       if (f.y > H + f.r + 30 && f.vy > 0) {
         fruits.splice(i, 1);
         if (!f.bomb) {
-          lives--; flash = 8; updateHud();
-          if (lives <= 0) { endGame(); }
+          lives = Math.max(0, lives - 1); flash = 8; updateHud();
+          if (lives <= 0) { endGame(); break; }
         }
       }
     }
