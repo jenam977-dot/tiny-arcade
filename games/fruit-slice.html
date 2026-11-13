@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fruit Slice — Tiny Arcade</title>
+<meta name="description" content="Fruit Slice: swipe to slice flying fruit, dodge the bombs, and beat your best score. Free to play in your browser — no downloads.">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site"><a class="logo" href="../index.html">🎮 Tiny <b>Arcade</b></a><nav><a href="../index.html">Games</a><a href="../about.html">About</a><a href="../contact.html">Contact</a></nav></header>
+<main class="game-page">
+<h1>🔪 Fruit Slice</h1>
+<p class="tag">Swipe through flying fruit. Three missed fruit — or one bomb too many — and the game is over.</p>
+<div class="hud"><span>Score <b id="score">0</b></span><span>Lives <b id="lives">3</b></span><span>Best <b id="best">0</b></span></div>
+<div class="canvas-wrap"><canvas id="game"></canvas>
+<div class="overlay" id="overlay"><h2>Fruit Slice</h2><p>Drag across the fruit to slice it. Avoid the bombs. Slice two or more in one swipe for a combo bonus.</p><button id="startBtn">▶ Start</button></div>
+<div class="overlay hidden" id="gameover"><h2>Game Over</h2><p>Score: <b id="finalScore">0</b> · Best: <b id="finalBest">0</b></p><button id="restartBtn">↻ Play again</button></div>
+</div>
+<p class="hint">On a phone, swipe with your finger. On a computer, hold the mouse button and drag.</p>
+<p class="back"><a href="../index.html">← Back to arcade</a></p>
+</main>
+<footer class="site"><a href="../about.html">About</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms</a><a href="../contact.html">Contact</a><p>© 2026 Tiny Arcade. All games are original and free to play.</p></footer>
+<script src="../js/fruit-slice.js"></script>
+</body>
+</html>

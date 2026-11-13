@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Memory Match — Tiny Arcade</title>
+<meta name="description" content="Memory Match: flip the cards and find all 8 pairs in as few moves as you can. A quick brain-teaser, free in your browser.">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site"><a class="logo" href="../index.html">🎮 Tiny <b>Arcade</b></a><nav><a href="../index.html">Games</a><a href="../about.html">About</a><a href="../contact.html">Contact</a></nav></header>
+<main class="game-page">
+<h1>🃏 Memory Match</h1>
+<p class="tag">Sixteen cards, eight pairs. Remember where everything is and clear the board in as few moves as you can.</p>
+<div class="hud"><span>Moves <b id="moves">0</b></span><span>Time <b id="time">0:00</b></span><span>Best (moves) <b id="best">—</b></span></div>
+<div class="canvas-wrap narrow"><div id="board"></div>
+<div class="overlay" id="overlay"><h2>Memory Match</h2><p>Tap two cards to flip them. Match all 8 pairs. Your timer starts on the first flip.</p><button id="startBtn">▶ Start</button></div>
+<div class="overlay hidden" id="gameover"><h2>You matched them all! 🎉</h2><p>Moves: <b id="finalMoves">0</b> · Time: <b id="finalTime">0:00</b> · Best: <b id="finalBest">—</b></p><button id="restartBtn">↻ Play again</button></div>
+</div>
+<p class="back"><a href="../index.html">← Back to arcade</a></p>
+</main>
+<footer class="site"><a href="../about.html">About</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms</a><a href="../contact.html">Contact</a><p>© 2026 Tiny Arcade. All games are original and free to play.</p></footer>
+<script src="../js/memory.js"></script>
+</body>
+</html>

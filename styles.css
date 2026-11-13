@@ -1,0 +1,55 @@
+:root{--bg:#0a0d1f;--panel:#141838;--panel2:#1b2050;--ink:#f2f4ff;--muted:#a7b2d8;--pink:#ff2e9b;--cyan:#00ddeb;--amber:#ffb347;--green:#38d996;--radius:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+a{color:var(--cyan)}
+header.site{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;background:#0d1129;border-bottom:1px solid #232a5e;position:sticky;top:0;z-index:10}
+.logo{font-size:1.35rem;font-weight:800;letter-spacing:.3px;text-decoration:none;color:var(--ink)}
+.logo b{color:var(--pink)}
+nav a{margin-left:16px;text-decoration:none;color:var(--muted);font-weight:600}
+nav a:hover{color:var(--ink)}
+main{max-width:960px;margin:0 auto;padding:20px}
+.hero{padding:26px 6px 8px}
+.hero h1{margin:0 0 6px;font-size:2rem;line-height:1.2}
+.hero p{margin:0;color:var(--muted);max-width:640px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin:22px 0}
+.card{background:var(--panel);border:1px solid #262c63;border-radius:var(--radius);padding:18px;text-decoration:none;color:var(--ink);display:block;transition:transform .12s ease,border-color .12s ease}
+.card:hover{transform:translateY(-3px);border-color:var(--cyan)}
+.card .emoji{font-size:2.6rem;line-height:1}
+.card h2{margin:10px 0 4px;font-size:1.15rem}
+.card p{margin:0;color:var(--muted);font-size:.93rem}
+.card .play{display:inline-block;margin-top:12px;background:var(--pink);color:#fff;font-weight:700;padding:8px 16px;border-radius:999px;font-size:.9rem}
+.hud{display:flex;gap:18px;flex-wrap:wrap;align-items:center;background:var(--panel);border:1px solid #262c63;border-radius:12px;padding:10px 16px;margin:14px 0}
+.hud b{color:var(--amber)}
+.canvas-wrap{position:relative;background:#05070f;border:1px solid #262c63;border-radius:var(--radius);overflow:hidden}
+.canvas-wrap.narrow{max-width:520px;margin-left:auto;margin-right:auto}
+.canvas-wrap canvas{display:block;width:100%;touch-action:none}
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(5,7,15,.84);text-align:center;padding:20px;z-index:2}
+.overlay h2{margin:0;font-size:1.6rem}
+.overlay p{margin:0;color:var(--muted);max-width:420px}
+.overlay.hidden{display:none}
+button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:11px 22px;background:var(--pink);color:#fff;cursor:pointer}
+button:hover{filter:brightness(1.1)}
+button.secondary{background:#2a3168}
+.hint{color:var(--muted);font-size:.92rem}
+.back{margin-top:18px}
+.game-page h1{margin:6px 0 2px}
+.game-page .tag{color:var(--muted);margin:0}
+.dpad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,52px);gap:6px;justify-content:center;margin:14px 0 4px}
+.dpad button{padding:0;font-size:1.3rem}
+.dpad .up{grid-column:2;grid-row:1}.dpad .left{grid-column:1;grid-row:2}.dpad .down{grid-column:2;grid-row:2}.dpad .right{grid-column:3;grid-row:2}
+#board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:520px;margin:0 auto;padding:18px}
+.mcard{aspect-ratio:1;background:var(--panel2);border:1px solid #2c3370;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;cursor:pointer;user-select:none;transition:transform .18s ease,background .18s ease}
+.mcard span{display:inline-block;visibility:hidden}
+.mcard.flipped{background:#232a5e;transform:rotateY(180deg)}
+.mcard.flipped span{visibility:visible;transform:rotateY(180deg)}
+.mcard.matched{background:#123f2c;border-color:var(--green);cursor:default}
+.mcard.matched span{visibility:visible}
+footer.site{border-top:1px solid #232a5e;margin-top:30px;padding:18px 20px 30px;text-align:center;color:var(--muted);font-size:.9rem}
+footer.site a{margin:0 10px;color:var(--muted);text-decoration:none}
+footer.site a:hover{color:var(--ink)}
+article.page{max-width:720px}
+article.page h1{font-size:1.7rem}
+article.page h2{margin-top:26px;font-size:1.15rem}
+.share-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0}
+.share-row a{text-decoration:none;font-weight:700;font-size:.9rem;padding:9px 16px;border-radius:999px;background:#2a3168;color:var(--ink)}
+@media(max-width:560px){.hero h1{font-size:1.55rem}nav a{margin-left:10px;font-size:.92rem}.dpad{grid-template-columns:repeat(3,64px);grid-template-rows:repeat(2,58px)}}
