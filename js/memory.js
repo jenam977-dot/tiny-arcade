@@ -9,6 +9,7 @@
   var finalMoves = document.getElementById('finalMoves');
   var finalTime = document.getElementById('finalTime');
   var finalBest = document.getElementById('finalBest');
+  var finalGlobalBest = document.getElementById('finalGlobalBest');
   var startBtn = document.getElementById('startBtn');
   var restartBtn = document.getElementById('restartBtn');
   var pauseOverlay = document.getElementById('pauseOverlay');
@@ -20,6 +21,13 @@
   var seconds = 0, timer = null, started = false, bestMoves = 0;
   var paused = false, won = false;
   try { bestMoves = parseInt(localStorage.getItem('tinyarcade_memory_best') || '0', 10) || 0; } catch (e) {}
+  var globalBest = null;
+  if (window.TinyArcadeScores) {
+    window.TinyArcadeScores.fetchBest('memory', function (b) {
+      globalBest = b;
+      if (b !== null && finalGlobalBest) finalGlobalBest.textContent = b;
+    });
+  }
   bestEl.textContent = bestMoves || '—';
 
   function fmt(s) {
@@ -134,6 +142,15 @@
     finalMoves.textContent = moves;
     finalTime.textContent = fmt(seconds);
     finalBest.textContent = bestMoves + (isBest ? ' — new best!' : '');
+    if (finalGlobalBest) finalGlobalBest.textContent = globalBest === null ? '—' : globalBest;
+    if (window.TinyArcadeScores) {
+      window.TinyArcadeScores.submitScore('memory', moves, function (b) {
+        if (b !== null) {
+          globalBest = b;
+          if (finalGlobalBest) finalGlobalBest.textContent = b;
+        }
+      });
+    }
     gameoverEl.classList.remove('hidden');
   }
 

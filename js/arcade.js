@@ -1,6 +1,7 @@
 /* Tiny Arcade — shared site behaviour: theme, nav, favourites,
    recently played, fullscreen, search + filters, share links.
-   No network calls. All state stays in the visitor's browser. */
+   Game progress state stays in the visitor's browser; the anonymous
+   all-time best helper at the bottom is the only network call the site makes. */
 (function () {
   'use strict';
   var favKey = 'tinyarcade_favs';
@@ -211,4 +212,37 @@
   renderRecent();
   renderFavourites();
   paintFavButtons();
+})();
+
+/* Global all-time best scores: anonymous score numbers only, sent to our own
+   server so every player sees the same all-time best. Fails silently — if the
+   server is unreachable, games keep working and the all-time best shows "—".
+   No personal data is sent. Used by the four main games only. */
+window.TinyArcadeScores = (function () {
+  'use strict';
+  var BASE = 'https://llm.manasonroads.cv/arcade/v1';
+  function call(url, opts, cb) {
+    if (typeof fetch === 'undefined') { cb(null); return; }
+    var ctrl = null, timer = null;
+    if (typeof AbortController !== 'undefined') {
+      ctrl = new AbortController();
+      opts.signal = ctrl.signal;
+      timer = setTimeout(function () { ctrl.abort(); }, 4000);
+    }
+    fetch(url, opts)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (timer) clearTimeout(timer); cb(d && typeof d.best === 'number' ? d.best : null); })
+      .catch(function () { if (timer) clearTimeout(timer); cb(null); });
+  }
+  function fetchBest(game, cb) {
+    call(BASE + '/best?game=' + encodeURIComponent(game), {}, cb);
+  }
+  function submitScore(game, score, cb) {
+    call(BASE + '/score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ game: game, score: score })
+    }, cb || function () {});
+  }
+  return { fetchBest: fetchBest, submitScore: submitScore };
 })();

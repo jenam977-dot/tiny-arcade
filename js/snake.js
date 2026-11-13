@@ -11,6 +11,7 @@
   var gameoverEl = document.getElementById('gameover');
   var finalScore = document.getElementById('finalScore');
   var finalBest = document.getElementById('finalBest');
+  var finalGlobalBest = document.getElementById('finalGlobalBest');
   var startBtn = document.getElementById('startBtn');
   var restartBtn = document.getElementById('restartBtn');
   var pauseOverlay = document.getElementById('pauseOverlay');
@@ -20,6 +21,13 @@
   var snake, dir, queue, food, score, best, timer, alive, started, speed, paused;
   try { best = parseInt(localStorage.getItem('tinyarcade_snake_best') || '0', 10) || 0; } catch (e) {}
   best = best || 0;
+  var globalBest = null;
+  if (window.TinyArcadeScores) {
+    window.TinyArcadeScores.fetchBest('snake', function (b) {
+      globalBest = b;
+      if (b !== null && finalGlobalBest) finalGlobalBest.textContent = b;
+    });
+  }
 
   function setup() {
     snake = [{ x: 6, y: 10 }, { x: 5, y: 10 }, { x: 4, y: 10 }];
@@ -127,6 +135,15 @@
     bestEl.textContent = best;
     finalScore.textContent = score;
     finalBest.textContent = best;
+    if (finalGlobalBest) finalGlobalBest.textContent = globalBest === null ? '—' : globalBest;
+    if (window.TinyArcadeScores && score > 0) {
+      window.TinyArcadeScores.submitScore('snake', score, function (b) {
+        if (b !== null) {
+          globalBest = b;
+          if (finalGlobalBest) finalGlobalBest.textContent = b;
+        }
+      });
+    }
     gameoverEl.classList.remove('hidden');
   }
 

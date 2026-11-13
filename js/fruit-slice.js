@@ -9,6 +9,7 @@
   var gameoverEl = document.getElementById('gameover');
   var finalScore = document.getElementById('finalScore');
   var finalBest = document.getElementById('finalBest');
+  var finalGlobalBest = document.getElementById('finalGlobalBest');
   var startBtn = document.getElementById('startBtn');
   var restartBtn = document.getElementById('restartBtn');
   var pauseOverlay = document.getElementById('pauseOverlay');
@@ -30,6 +31,13 @@
   var running = false, paused = false, score = 0, lives = 3, best = 0;
   var spawnIn = 0, flash = 0, shake = 0, last = 0;
   try { best = parseInt(localStorage.getItem('tinyarcade_fruit_best') || '0', 10) || 0; } catch (e) {}
+  var globalBest = null;
+  if (window.TinyArcadeScores) {
+    window.TinyArcadeScores.fetchBest('fruit-slice', function (b) {
+      globalBest = b;
+      if (b !== null && finalGlobalBest) finalGlobalBest.textContent = b;
+    });
+  }
   bestEl.textContent = best;
 
   function resize() {
@@ -134,6 +142,15 @@
     bestEl.textContent = best;
     finalScore.textContent = score;
     finalBest.textContent = best;
+    if (finalGlobalBest) finalGlobalBest.textContent = globalBest === null ? '—' : globalBest;
+    if (window.TinyArcadeScores && score > 0) {
+      window.TinyArcadeScores.submitScore('fruit-slice', score, function (b) {
+        if (b !== null) {
+          globalBest = b;
+          if (finalGlobalBest) finalGlobalBest.textContent = b;
+        }
+      });
+    }
     gameoverEl.classList.remove('hidden');
   }
 
