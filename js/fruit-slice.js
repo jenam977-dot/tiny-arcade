@@ -120,6 +120,7 @@
     paused = false;
     pauseOverlay.classList.add('hidden');
     if (score > best) { best = score; try { localStorage.setItem('tinyarcade_fruit_best', String(best)); } catch (e) {} }
+    bestEl.textContent = best;
     finalScore.textContent = score;
     finalBest.textContent = best;
     gameoverEl.classList.remove('hidden');

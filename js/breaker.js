@@ -121,6 +121,7 @@
       best = score;
       try { localStorage.setItem('tinyarcade_breaker_best', String(best)); } catch (e) {}
     }
+    bestEl.textContent = best;
     finalScore.textContent = score;
     finalBest.textContent = best;
     gameoverEl.classList.remove('hidden');

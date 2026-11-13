@@ -124,6 +124,7 @@
       best = score;
       try { localStorage.setItem('tinyarcade_snake_best', String(best)); } catch (e) {}
     }
+    bestEl.textContent = best;
     finalScore.textContent = score;
     finalBest.textContent = best;
     gameoverEl.classList.remove('hidden');
