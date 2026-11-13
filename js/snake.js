@@ -18,11 +18,11 @@
   best = best || 0;
 
   function setup() {
-    snake = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
+    snake = [{ x: 6, y: 10 }, { x: 5, y: 10 }, { x: 4, y: 10 }];
     dir = { x: 1, y: 0 };
     queue = [];
     score = 0;
-    speed = 140;
+    speed = 150;
     alive = false;
     started = false;
     placeFood();
