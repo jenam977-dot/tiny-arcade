@@ -1,7 +1,8 @@
 /* Tiny Arcade — shared site behaviour: theme, nav, favourites,
    recently played, fullscreen, search + filters, share links.
    Game progress state stays in the visitor's browser; the anonymous
-   all-time best helper at the bottom is the only network call the site makes. */
+   all-time best helper and the anonymous visit counter at the bottom
+   are the only network calls the site makes. */
 (function () {
   'use strict';
   var favKey = 'tinyarcade_favs';
@@ -245,4 +246,19 @@ window.TinyArcadeScores = (function () {
     }, cb || function () {});
   }
   return { fetchBest: fetchBest, submitScore: submitScore };
+})();
+
+/* Anonymous visit counter: one count per page load, sent to our own server.
+   Page path + day only — no cookies, no personal data. Fails silently. */
+(function () {
+  'use strict';
+  try {
+    if (typeof fetch === 'undefined') return;
+    fetch('https://llm.manasonroads.cv/arcade/v1/visit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page: location.pathname }),
+      keepalive: true
+    }).catch(function () {});
+  } catch (e) {}
 })();

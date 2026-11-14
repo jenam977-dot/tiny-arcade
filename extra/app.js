@@ -678,3 +678,16 @@ window.addEventListener('hashchange', function () {
     showHome();
   }
 });
+
+/* Anonymous visit counter: one count per page load, sent to our own server.
+   Page path + day only — no cookies, no personal data. Fails silently. */
+try {
+  if (typeof fetch !== 'undefined') {
+    fetch('https://llm.manasonroads.cv/arcade/v1/visit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page: location.pathname }),
+      keepalive: true
+    }).catch(function () {});
+  }
+} catch (e) {}
